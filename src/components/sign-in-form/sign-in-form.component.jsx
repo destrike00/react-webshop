@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import "./sign-in-form.styles.scss";
+
 const defaultFormFields = {
     email: "",
     password: "",
@@ -24,8 +25,7 @@ const SignInForm = () => {
     };
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
     };
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -41,7 +41,7 @@ const SignInForm = () => {
                 email,
                 password
             );
-            console.log(response);
+
             resetFormFields();
         } catch (error) {
             switch (error.code) {
